@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file alias="new">icons8-new-file-64.png</file>
+        <file alias="open">icons8-open-file-folder-48.png</file>
+        <file alias="save">icons8-save-50.png</file>
+        <file alias="save_as">icons8-save-as-50.png</file>
+        <file alias="paste">paste-47-1123495.png</file>
+        <file alias="copy">copy.png</file>
+        <file alias="cut">cut-132-554165.png</file>
+    </qresource>
+</RCC>
