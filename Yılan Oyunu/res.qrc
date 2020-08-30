@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/images">
+        <file alias="red">red_dot.png</file>
+        <file alias="yellow">yellow_dot.png</file>
+        <file alias="yem">apple.png</file>
+    </qresource>
+</RCC>

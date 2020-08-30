@@ -1,0 +1,66 @@
+#include "mainwindow.h"
+#include "ui_mainwindow.h"
+#include <QtGui>
+#define KARE 20
+MainWindow::MainWindow(QWidget *parent)
+    : QMainWindow(parent)
+    , ui(new Ui::MainWindow)
+{
+    ui->setupUi(this);
+    yilanOlustur();
+}
+
+MainWindow::~MainWindow()
+{
+    delete ui;
+}
+
+void MainWindow::paintEvent(QPaintEvent *e)
+{
+    arkaPlanCiz(e);
+    //yilanOlustur(e);
+}
+
+void MainWindow::arkaPlanCiz(QPaintEvent *e)
+{
+    // oyunun arka planını olusturur.
+
+    QPainter painter(this);
+    int x = ui->arkaPlan->x();
+    int y = ui->arkaPlan->y();
+    painter.setBrush(Qt::black);
+    for (int i = 0; i <= 640; i+= KARE)
+        for (int j = 0 ; j <= 480 ; j+= KARE)
+        {
+            painter.drawRect(x+i,y+j,KARE,KARE);
+        }
+}
+
+void MainWindow::yilanOlustur()
+{
+    yilan.uzuvEkle(16,8);
+    //yilan.uzuvEkle(16,9);
+    //yilan->uzuvEkle(16,10);
+    //yilan->uzuvEkle(16,11);
+    //yilan->uzuvEkle(16,12);
+}
+
+void MainWindow::yilanGuncelle(QPaintEvent *e)
+{
+    QPainter painter(this);
+    Vucut* temp = yilan.bas;
+    QImage _image(":/images/yellow");
+    QImage image = _image.scaled(20,20,Qt::KeepAspectRatio);
+    QImage _image2(":/images/red");
+    QImage image2 = _image.scaled(20,20,Qt::KeepAspectRatio);
+    painter.drawImage(temp->x,temp->y,image2);
+    temp = temp->sonrakiUzuv;
+    while (temp != nullptr){
+
+        painter.drawImage(temp->x,temp->y,image);
+        temp = temp->sonrakiUzuv;
+    }
+}
+
+
+
