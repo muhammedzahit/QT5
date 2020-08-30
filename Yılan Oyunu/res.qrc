@@ -4,4 +4,7 @@
         <file alias="yellow">yellow_dot.png</file>
         <file alias="yem">apple.png</file>
     </qresource>
+    <qresource prefix="/translations">
+        <file>english.qm</file>
+    </qresource>
 </RCC>

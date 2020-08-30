@@ -171,7 +171,7 @@ void MainWindow::yuksekPuanKontrol(int puan)
     {
         if (puan > easy)
         {
-            highScoreEasy = "KOLAY : " + QString::number(puan);
+            highScoreEasy = tr("KOLAY : ") + QString::number(puan);
             easy = puan;
         }
     }
@@ -179,14 +179,14 @@ void MainWindow::yuksekPuanKontrol(int puan)
         {
             if (puan > normal)
                 {
-                    highScoreNormal = "NORMAL : " + QString::number(puan);
+                    highScoreNormal = tr("NORMAL : ") + QString::number(puan);
                     normal = puan;
                 }
         }
     else {
             if (puan > hard)
                 {
-                    highScoreHard = "ZOR : " + QString::number(puan);
+                    highScoreHard = tr("ZOR : ") + QString::number(puan);
                     hard = puan;
                 }
     }
@@ -194,7 +194,8 @@ void MainWindow::yuksekPuanKontrol(int puan)
 
 void MainWindow::mesajGoster()
 {
-    QMessageBox::information(this,"GAME OVER","Puanınız : " + QString::number(puan));
+    QString text = tr("Puanınız : ");
+    QMessageBox::information(this,"GAME OVER",text + QString::number(puan));
     yuksekPuanKontrol(puan);
     ui->stack->setCurrentIndex(0);
     yilan.sifirla();
@@ -317,17 +318,17 @@ void MainWindow::on_pushButton_2_clicked()
 
 void MainWindow::puanGuncelle()
 {
-    ui->label_4->setText("Puan " + QString::number(puan));
+    ui->label_4->setText(tr("Puan ") + QString::number(puan));
 
 }
 
 void MainWindow::on_pushButton_3_clicked()
 {
-    if (highScoreEasy == "") ui->label_easy->setText("KOLAY : Bu Zorlukta oyun oynamadınız.");
+    if (highScoreEasy == "") ui->label_easy->setText(tr("KOLAY : Bu Zorlukta oyun oynamadınız."));
     else ui->label_easy->setText(highScoreEasy);
-    if (highScoreNormal == "") ui->label_normal->setText("NORMAL : Bu Zorlukta oyun oynamadınız.");
+    if (highScoreNormal == "") ui->label_normal->setText(tr("NORMAL : Bu Zorlukta oyun oynamadınız."));
     else ui->label_normal->setText(highScoreNormal);
-    if (highScoreHard == "") ui->label_hard->setText("ZOR : Bu Zorlukta oyun oynamadınız.");
+    if (highScoreHard == "") ui->label_hard->setText(tr("ZOR : Bu Zorlukta oyun oynamadınız."));
     else ui->label_hard->setText(highScoreHard);
     ui->stack->setCurrentIndex(2);
 
