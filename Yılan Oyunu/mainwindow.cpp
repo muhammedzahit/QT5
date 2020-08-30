@@ -9,6 +9,10 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     setWindowTitle("Qt 5 - Yılan Oyunu");
     ui->stack->setCurrentIndex(0);
+	
+	// pencerinin boyutlandırılması kısıtlandırıldı.
+    setFixedSize(480,360);
+	
 	// oyundaki bir hareket karesenin uzunluk ve genislikleri atandı.
     genislik = 20;
     uzunluk = 20;
