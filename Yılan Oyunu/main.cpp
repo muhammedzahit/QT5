@@ -9,6 +9,7 @@ int main(int argc, char *argv[])
     t.load(":/translations/english");
     QStringList diller;
     diller << "Turkce" << "English";
+	// kullanıcıdan bir dil secmesi istenir. 
     QString dil = QInputDialog::getItem(NULL,"Dil","Dil Seç",diller);
     if (dil == "English")
         a.installTranslator(&t);

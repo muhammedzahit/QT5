@@ -1,7 +1,7 @@
 #ifndef VUCUT_H
 #define VUCUT_H
 
-
+// bu sınıf yılanın bir vucut uzvunu temsil eder.
 class Vucut
 {
 public:

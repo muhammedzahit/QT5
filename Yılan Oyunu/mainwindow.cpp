@@ -9,18 +9,23 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     setWindowTitle("Qt 5 - Yılan Oyunu");
     ui->stack->setCurrentIndex(0);
+	// oyundaki bir hareket karesenin uzunluk ve genislikleri atandı.
     genislik = 20;
     uzunluk = 20;
     puan = 0;
     easy = 0; normal = 0; hard = 0;
     kayitDosyasiOku();
-    yemCizildiMi = false;
+	
+	// eğer yemin x ve y değerleri -1 i gösteriyorsa program yemin cizilmedigini anlayacak
+	// ve yemi cizecektir. 
     yemX=-1;yemY=yemX;
+	
+	// baslangıc yonu olarak yukarı girilmistir.
     yon = YUKARI;
 
     timer = new QTimer(this);
-    //timer->start(100);
-
+	
+	
     connect(timer,SIGNAL(timeout()),this,SLOT(hareketEt()));
     connect(timer,SIGNAL(timeout()),this,SLOT(update()));
     connect(timer,SIGNAL(timeout()),this,SLOT(puanGuncelle()));
@@ -61,9 +66,12 @@ void MainWindow::paintEvent(QPaintEvent *e)
     }
 }
 
+
+// oyunun arka planını olusturur.
 void MainWindow::arkaPlanCiz(QPaintEvent *e)
 {
-    // oyunun arka planını olusturur.
+    
+	// bu degerler programın stabil calismasi icin sabit tutulmustur.
     xKareSayisi = 32;
     yKareSayisi = 24;
     QPainter painter(this);
@@ -77,6 +85,7 @@ void MainWindow::arkaPlanCiz(QPaintEvent *e)
         }
 }
 
+// oyunu başlamadan once 5 karelik bir yılan vucudu olusturuldu.
 void MainWindow::yilanOlustur()
 {
     yilan.uzuvEkle(16,8);
@@ -86,6 +95,7 @@ void MainWindow::yilanOlustur()
     yilan.uzuvEkle(16,12);
 }
 
+// yilan boyutu guncellendi.
 void MainWindow::yilanGuncelle(QPaintEvent *e)
 {
     QPainter painter(this);
@@ -102,6 +112,7 @@ void MainWindow::yilanGuncelle(QPaintEvent *e)
     }
 }
 
+// bu fonksiyon yilanın yemi yiyip yemedigini kontrol eder.
 bool MainWindow::ustUsteMi(int yemX, int yemY)
 {
     Vucut* temp = yilan.bas;
@@ -112,6 +123,7 @@ bool MainWindow::ustUsteMi(int yemX, int yemY)
     return false;
 }
 
+// bu fonksiyon bir yem cizer ve yemin yılanın vucuda denk gelip gelmedigini kontrol eder.
 void MainWindow::yemCiz(QPaintEvent* e)
 {
     if (yemX == -1 && yemY == -1)
@@ -131,6 +143,7 @@ void MainWindow::yemCiz(QPaintEvent* e)
     painter.drawImage(yemX*uzunluk,yemY*genislik,image2);
 }
 
+// klavyede hangi tusa basildigini algilar.
 void MainWindow::keyPressEvent(QKeyEvent *e)
 {
     if (e->key() == Qt::Key_Up)
@@ -143,6 +156,7 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
         yon = SOL;
 }
 
+// bu fonksiyon oyundaki kaybetme mekanizmasını olusturur.
 bool MainWindow::yanlisHareketKontrol(int x, int y)
 {
     if (!yilan.bas) return false;
@@ -155,6 +169,7 @@ bool MainWindow::yanlisHareketKontrol(int x, int y)
     }
     return false;
 }
+
 // yem yenilirse true değeri döner.
 bool MainWindow::yemKontrol(int x, int y)
 {
@@ -165,6 +180,7 @@ bool MainWindow::yemKontrol(int x, int y)
     return false;
 }
 
+// oyuncu yuksek puan yaparsa yuksek puanlar sekmesindeki değerler güncellenir.
 void MainWindow::yuksekPuanKontrol(int puan)
 {
     if (ui->radioButton->isChecked())
@@ -192,6 +208,7 @@ void MainWindow::yuksekPuanKontrol(int puan)
     }
 }
 
+// oyuncu yenildiginde bilgi mesajı gösterir 
 void MainWindow::mesajGoster()
 {
     QString text = tr("Puanınız : ");
@@ -203,6 +220,8 @@ void MainWindow::mesajGoster()
     puan = 0;
 }
 
+// Yılanı hareket ettirir. Ve yemin yenilip yenilmeyecegini kontrol eder. Aynı
+// zamanda oyuncu oyunu kaybederse hata mesajı gosterir.
 void MainWindow::hareketEt()
 {
     if (yon == YUKARI)
@@ -273,9 +292,7 @@ void MainWindow::hareketEt()
     }
 }
 
-
-
-
+// Oyunu baslat butonuna basildiginda oyunu baslatir.
 void MainWindow::on_pushButton_clicked()
 {
     yilanOlustur();
@@ -289,6 +306,9 @@ void MainWindow::on_pushButton_clicked()
     ui->stack->setCurrentIndex(1);
 }
 
+// oyun penceresinin uzunluk ve genisligini ayarlar. 
+// Bu degerlere gore bir oyun karesinin genislik ve 
+// uzunlugunu gunceller.
 void MainWindow::on_radioButton_4_clicked()
 {
     genislik = 15;
@@ -310,18 +330,22 @@ void MainWindow::on_radioButton_6_clicked()
     setFixedSize(800,600);
 }
 
+// Oyundan cık butonuna basildiginda oyunun yuksek skorlarını "kayit.txt" adlı
+// dosyaya kaydeder ve oyundan çıkar.
 void MainWindow::on_pushButton_2_clicked()
 {
     kayitDosyasinaYaz();
     close();
 }
 
+// Oyun oynarken sağ üste yazan puan yazısını gunceller.
 void MainWindow::puanGuncelle()
 {
     ui->label_4->setText(tr("Puan ") + QString::number(puan));
 
 }
 
+// Yüksek skorlar penceresini açar.
 void MainWindow::on_pushButton_3_clicked()
 {
     if (highScoreEasy == "") ui->label_easy->setText(tr("KOLAY : Bu Zorlukta oyun oynamadınız."));
@@ -334,6 +358,7 @@ void MainWindow::on_pushButton_3_clicked()
 
 }
 
+// Yüksek skorlar penceresinden çıkar.
 void MainWindow::on_pushButton_4_clicked()
 {
      ui->stack->setCurrentIndex(0);
